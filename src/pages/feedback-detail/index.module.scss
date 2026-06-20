@@ -6,52 +6,316 @@
   background: $color-bg-page;
 }
 
-.wrapper {
-  padding-top: $spacing-xl * 2;
+.successWrap {
+  padding: $spacing-xl * 2 $spacing-md;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 
-.iconBox {
+.successIconBox {
   width: 160rpx;
   height: 160rpx;
   border-radius: 50%;
-  background: $color-warning-light;
+  background: $color-done-bg;
   @include flex-center;
-  margin-bottom: $spacing-xl;
+  margin-bottom: $spacing-lg;
 }
 
-.iconText {
+.successIcon {
   font-size: 80rpx;
+  color: $color-done;
+  font-weight: $font-weight-bold;
 }
 
-.title {
-  font-size: 44rpx;
+.successTitle {
+  font-size: 48rpx;
   font-weight: $font-weight-bold;
   color: $color-text-primary;
-  margin-bottom: $spacing-md;
+  margin-bottom: $spacing-sm;
   display: block;
 }
 
-.subtitle {
+.successSubtitle {
   font-size: 32rpx;
   color: $color-text-secondary;
   line-height: 1.6;
-  margin-bottom: $spacing-xl * 2;
+  text-align: center;
+  margin-bottom: $spacing-xl;
   display: block;
-  padding: 0 $spacing-lg;
+  white-space: pre-line;
 }
 
-.actionList {
+.successInfoCard {
+  width: 100%;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  box-shadow: $shadow-card;
+}
+
+.successInfoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm 0;
+
+  & + & {
+    border-top: 2rpx solid $color-divider;
+  }
+}
+
+.successInfoLabel {
+  font-size: 30rpx;
+  color: $color-text-secondary;
+}
+
+.successInfoValue {
+  font-size: 30rpx;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  max-width: 60%;
+  text-align: right;
+}
+
+.successActions {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-  margin-bottom: $spacing-xl;
 }
 
-.backBtn {
-  margin-top: $spacing-lg;
+.emergencyTip {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #FFF1F0 0%, #FFE7E5 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  border: 2rpx solid $color-error-light;
+}
+
+.emergencyTipIcon {
+  font-size: 56rpx;
+  margin-right: $spacing-md;
+}
+
+.emergencyTipContent {
+  flex: 1;
+}
+
+.emergencyTipTitle {
+  font-size: 32rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-error;
+  margin-bottom: 6rpx;
+  display: block;
+}
+
+.emergencyTipText {
+  font-size: 26rpx;
+  color: $color-text-secondary;
+  display: block;
+}
+
+.emergencyCallBtn {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: $color-error;
+  @include flex-center;
+  margin-left: $spacing-md;
+
+  &:active {
+    opacity: 0.85;
+  }
+}
+
+.emergencyCallText {
+  font-size: 44rpx;
+}
+
+.sectionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+}
+
+.sectionIcon {
+  font-size: 40rpx;
+  margin-right: $spacing-xs;
+}
+
+.sectionTitle {
+  font-size: 36rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.sectionRequired {
+  font-size: 26rpx;
+  color: $color-error;
+  margin-left: $spacing-xs;
+}
+
+.sectionOptional {
+  font-size: 26rpx;
+  color: $color-text-tertiary;
+  margin-left: $spacing-xs;
+}
+
+.sectionDesc {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  line-height: 1.5;
+  margin-bottom: $spacing-md;
+  display: block;
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-sm;
+}
+
+.photoItem {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: $color-bg-hover;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+}
+
+.photoRemove {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  @include flex-center;
+}
+
+.photoRemoveIcon {
+  font-size: 36rpx;
+  color: #fff;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  margin-top: -4rpx;
+}
+
+.photoAdd {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 3rpx dashed $color-primary-light;
+  border-radius: $radius-md;
+  background: $color-primary-light + 10;
+  @include flex-center;
+  flex-direction: column;
+
+  &:active {
+    background: $color-primary-light + 30;
+  }
+}
+
+.photoAddIcon {
+  font-size: 64rpx;
+  color: $color-primary;
+  line-height: 1;
+  margin-bottom: 8rpx;
+}
+
+.photoAddText {
+  font-size: 24rpx;
+  color: $color-primary;
+}
+
+.painLevelRow {
+  display: flex;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-sm;
+}
+
+.painLevelBtn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-sm 0;
+  border-radius: $radius-md;
+  background: $color-bg-hover;
+  border: 3rpx solid transparent;
+  transition: all $transition-normal ease;
+
+  &.active {
+    background: $color-primary-light + 20;
+    border-color: $color-primary;
+  }
+
+  &:active {
+    background: $color-primary-light + 10;
+  }
+}
+
+.painLevelNum {
+  font-size: 40rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: 1.2;
+
+  .active & {
+    color: $color-primary;
+  }
+}
+
+.painLevelLabel {
+  font-size: 22rpx;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.painSelected {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  margin-top: $spacing-xs;
+}
+
+.noteInput {
+  width: 100%;
+  min-height: 180rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  font-size: 30rpx;
+  color: $color-text-primary;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
+
+.noteCount {
+  display: block;
+  text-align: right;
+  font-size: 24rpx;
+  color: $color-text-tertiary;
+  margin-top: $spacing-xs;
+}
+
+.submitSection {
+  padding: $spacing-md 0;
 }

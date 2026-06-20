@@ -13,7 +13,12 @@ import type {
   DiscomfortFormData,
   PainLevel,
   SwellingLevel,
-  MedicationStatus
+  MedicationStatus,
+  PhotoFeedbackData
+} from '@/types';
+import {
+  SWELLING_LEVEL_TEXT,
+  PAIN_LEVEL_TEXT
 } from '@/types';
 import {
   mockTreatmentInfo,
@@ -45,6 +50,7 @@ interface AppContextType extends AppState {
   updateReminderStatus: (reminderId: string, status: ReminderStatus) => void;
   addSymptomRecord: (record: Omit<SymptomRecord, 'id' | 'createdAt'>) => void;
   submitDiscomfortForm: (formData: DiscomfortFormData) => DiscomfortReport;
+  submitPhotoFeedback: (data: PhotoFeedbackData) => void;
   addFamilyMember: (member: Omit<FamilyMember, 'id' | 'joinedAt'>) => void;
   removeFamilyMember: (memberId: string) => void;
   handleClinicTask: (taskId: string, status: 'processing' | 'done', note?: string) => void;
@@ -257,11 +263,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     const newTask: ClinicTask = {
       id: `task_${Date.now()}`,
       type: 'discomfort',
+      source: formData.reminderId ? 'reminder' : 'symptom',
       patientName: state.treatment.patientName,
       treatmentType: state.treatment.treatmentType,
       daysAfter,
       title: `${reminder?.title || '不适反馈'} - ${formData.bleeding ? '出血' : ''}${formData.fever ? '发烧' : ''}`,
-      content: `疼痛${formData.painLevel}分，${formData.swellingLevel}，${formData.bleeding ? '有出血' : '无出血'}，${formData.fever ? '有发烧' : '无发烧'}`,
+      content: `疼痛${formData.painLevel}分，${SWELLING_LEVEL_TEXT[formData.swellingLevel]}，${formData.bleeding ? '有出血' : '无出血'}，${formData.fever ? '有发烧' : '无发烧'}`,
       priority: newReport.status === 'pending' && (formData.bleeding || formData.fever || formData.painLevel >= 4) ? 'high' : 'normal',
       report: newReport,
       createdAt: getNowStr(),
@@ -296,6 +303,90 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     console.log('[AppContext] 不适反馈已提交，已同步到：提醒状态、症状记录、诊所待处理任务');
     return newReport;
   }, [state.treatment, state.reminders]);
+
+  const submitPhotoFeedback = useCallback((data: PhotoFeedbackData) => {
+    console.log('[AppContext] 提交照片反馈:', data);
+    if (!state.treatment) {
+      throw new Error('未绑定治疗信息');
+    }
+
+    const painLevel = data.painLevel ?? 2;
+    const daysAfter = getDaysSinceTreatment(state.treatment.treatmentDate);
+    const nowStr = getNowStr();
+    const todayStr = getTodayStr();
+
+    const sourceMap: Record<PhotoFeedbackData['from'], ClinicTask['source']> = {
+      contact: 'contact',
+      symptom: 'symptom',
+      emergency: 'emergency'
+    };
+    const taskSource = sourceMap[data.from];
+
+    const titleMap: Record<PhotoFeedbackData['from'], string> = {
+      contact: '伤口照片反馈',
+      symptom: '症状照片反馈',
+      emergency: '紧急照片反馈'
+    };
+
+    const newReport: DiscomfortReport = {
+      id: `rep_photo_${Date.now()}`,
+      treatmentId: state.treatment.id,
+      patientName: state.treatment.patientName,
+      painLevel,
+      swellingLevel: 'mild',
+      medicationStatus: 'taken',
+      bleeding: false,
+      fever: false,
+      photos: data.photos,
+      note: data.note,
+      createdAt: nowStr,
+      status: 'pending',
+      nextAction: 'photo'
+    };
+
+    const newSymptom: Omit<SymptomRecord, 'id' | 'createdAt'> = {
+      date: todayStr,
+      painLevel,
+      swellingLevel: 'mild',
+      medicationStatus: 'taken',
+      bleeding: false,
+      fever: false,
+      note: data.note || '伤口照片反馈',
+      photos: data.photos,
+      source: 'photo'
+    };
+
+    const newTask: ClinicTask = {
+      id: `task_${Date.now()}`,
+      type: 'photo',
+      source: taskSource,
+      patientName: state.treatment.patientName,
+      treatmentType: state.treatment.treatmentType,
+      daysAfter,
+      title: titleMap[data.from],
+      content: `患者上传了${data.photos.length}张伤口照片${data.note ? '，备注：' + data.note : ''}${data.painLevel !== undefined ? '，疼痛' + data.painLevel + '分' : ''}`,
+      priority: data.from === 'emergency' ? 'high' : 'normal',
+      report: newReport,
+      createdAt: nowStr,
+      status: 'pending'
+    };
+
+    setState(prev => ({
+      ...prev,
+      discomfortReports: [newReport, ...prev.discomfortReports],
+      symptoms: [
+        {
+          ...newSymptom,
+          id: `sym_${Date.now() + 1}`,
+          createdAt: nowStr
+        },
+        ...prev.symptoms
+      ],
+      clinicTasks: [newTask, ...prev.clinicTasks]
+    }));
+
+    console.log('[AppContext] 照片反馈已提交，已同步到：症状记录、诊所待处理任务');
+  }, [state.treatment]);
 
   const addFamilyMember = useCallback((member: Omit<FamilyMember, 'id' | 'joinedAt'>) => {
     console.log('[AppContext] 添加家属:', member);
@@ -435,6 +526,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         updateReminderStatus,
         addSymptomRecord,
         submitDiscomfortForm,
+        submitPhotoFeedback,
         addFamilyMember,
         removeFamilyMember,
         handleClinicTask,

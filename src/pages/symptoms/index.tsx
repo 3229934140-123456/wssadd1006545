@@ -78,7 +78,7 @@ const SymptomsPage: React.FC = () => {
           Taro.makePhoneCall({ phoneNumber: '138-0000-1200' })
             .catch(err => console.error('[拨打电话] 失败:', err));
         } else {
-          Taro.navigateTo({ url: '/pages/feedback-detail/index?from=symptom' });
+          Taro.navigateTo({ url: '/pages/feedback-detail/index?from=emergency' });
         }
       }
     });

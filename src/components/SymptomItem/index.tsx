@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from '@tarojs/components';
+import { View, Text, Image } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import classnames from 'classnames';
 import { PAIN_LEVEL_TEXT, SWELLING_LEVEL_TEXT, MEDICATION_STATUS_TEXT } from '@/types';
 import type { SymptomRecord } from '@/types';
@@ -30,6 +31,11 @@ const SymptomItem: React.FC<SymptomItemProps> = ({ record }) => {
           {record.source === 'daily' && (
             <View className={classnames(styles.sourceTag, styles.sourceTagDaily)}>
               <Text className={styles.sourceTagText}>日常记录</Text>
+            </View>
+          )}
+          {record.source === 'photo' && (
+            <View className={classnames(styles.sourceTag, styles.sourceTagPhoto)}>
+              <Text className={styles.sourceTagText}>📷 照片反馈</Text>
             </View>
           )}
         </View>
@@ -67,6 +73,26 @@ const SymptomItem: React.FC<SymptomItemProps> = ({ record }) => {
         <View className={styles.noteBox}>
           <Text className={styles.noteLabel}>备注：</Text>
           <Text className={styles.noteText}>{record.note}</Text>
+        </View>
+      )}
+
+      {record.photos && record.photos.length > 0 && (
+        <View className={styles.photoRow}>
+          {record.photos.map((photo, idx) => (
+            <View key={idx} className={styles.photoItem}>
+              <Image
+                src={photo}
+                className={styles.photoImg}
+                mode="aspectFill"
+                onClick={() => {
+                  Taro.previewImage({
+                    urls: record.photos as string[],
+                    current: photo
+                  });
+                }}
+              />
+            </View>
+          ))}
         </View>
       )}
 

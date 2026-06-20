@@ -39,6 +39,10 @@
   &.sourceTagDaily {
     background: $color-primary-light;
   }
+
+  &.sourceTagPhoto {
+    background: #FFF4E6;
+  }
 }
 
 .sourceTagText {
@@ -48,6 +52,10 @@
 
   .sourceTagDaily & {
     color: $color-primary;
+  }
+
+  .sourceTagPhoto & {
+    color: #FF9F43;
   }
 }
 
@@ -139,6 +147,25 @@
   font-size: 30rpx;
   color: $color-text-secondary;
   line-height: 1.5;
+}
+
+.photoRow {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+}
+
+.photoItem {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: $color-bg-hover;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
 }
 
 .recordTime {

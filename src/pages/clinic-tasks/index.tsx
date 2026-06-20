@@ -3,7 +3,12 @@ import { View, Text, ScrollView, Image } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import classnames from 'classnames';
 import { useApp } from '@/store/AppContext';
-import { TREATMENT_TYPE_MAP, SWELLING_LEVEL_TEXT, MEDICATION_STATUS_TEXT } from '@/types';
+import {
+  TREATMENT_TYPE_MAP,
+  SWELLING_LEVEL_TEXT,
+  MEDICATION_STATUS_TEXT,
+  TASK_SOURCE_MAP
+} from '@/types';
 import type { ClinicTask } from '@/types';
 import BigButton from '@/components/BigButton';
 import styles from './index.module.scss';
@@ -191,9 +196,22 @@ const ClinicTasksPage: React.FC = () => {
           >
             <View className={styles.taskHeader}>
               <View className={styles.taskPatientInfo}>
-                <Text className={styles.taskPatientName}>
-                  {task.patientName} · {TREATMENT_TYPE_MAP[task.treatmentType]}
-                </Text>
+                <View className={styles.patientNameRow}>
+                  <Text className={styles.taskPatientName}>
+                    {task.patientName} · {TREATMENT_TYPE_MAP[task.treatmentType]}
+                  </Text>
+                  <View className={classnames(
+                    styles.sourceBadge,
+                    task.type === 'photo' && styles.sourcePhoto,
+                    task.type === 'discomfort' && styles.sourceDiscomfort,
+                    task.source === 'emergency' && styles.sourceEmergency
+                  )}>
+                    <Text className={styles.sourceBadgeText}>
+                      {task.type === 'photo' ? '📷 ' : ''}
+                      {TASK_SOURCE_MAP[task.source]}
+                    </Text>
+                  </View>
+                </View>
                 <Text className={styles.taskTreatment}>
                   术后第{task.daysAfter + 1}天
                 </Text>

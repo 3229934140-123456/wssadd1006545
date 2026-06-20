@@ -71,7 +71,7 @@ export interface SymptomRecord {
   note?: string;
   photos?: string[];
   createdAt: string;
-  source: 'daily' | 'discomfort';
+  source: 'daily' | 'discomfort' | 'photo';
   reminderId?: string;
 }
 
@@ -183,7 +183,8 @@ export interface SubscriptionTemplate {
 // 诊所回访待处理任务
 export interface ClinicTask {
   id: string;
-  type: 'discomfort' | 'symptom' | 'followup';
+  type: 'discomfort' | 'symptom' | 'followup' | 'photo';
+  source: 'reminder' | 'symptom' | 'contact' | 'emergency' | 'photo';
   patientName: string;
   treatmentType: TreatmentType;
   daysAfter: number;
@@ -198,3 +199,20 @@ export interface ClinicTask {
   handledBy?: string;
   note?: string;
 }
+
+// 照片反馈表单数据
+export interface PhotoFeedbackData {
+  from: 'contact' | 'symptom' | 'emergency';
+  photos: string[];
+  painLevel?: PainLevel;
+  note?: string;
+}
+
+// 任务来源文本映射
+export const TASK_SOURCE_MAP: Record<ClinicTask['source'], string> = {
+  reminder: '今日提醒',
+  symptom: '症状反馈',
+  contact: '联系诊所',
+  emergency: '紧急联系',
+  photo: '伤口照片'
+};
