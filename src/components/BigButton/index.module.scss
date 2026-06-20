@@ -1,0 +1,98 @@
+@use '@/styles/variables.scss' as *;
+
+.bigButton {
+  @include flex-center;
+  @include button-reset;
+  flex-direction: row;
+  gap: $spacing-sm;
+  padding: 0 $spacing-lg;
+  border-radius: $radius-button;
+  transition: all $transition-base;
+  cursor: pointer;
+  user-select: none;
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  font-size: 44rpx;
+  line-height: 1;
+}
+
+.mainText {
+  font-size: 38rpx;
+  font-weight: $font-weight-semibold;
+  line-height: 1.3;
+}
+
+.subText {
+  font-size: 26rpx;
+  margin-top: 4rpx;
+  opacity: 0.85;
+}
+
+// 尺寸
+.sizeNormal {
+  height: 100rpx;
+  min-width: 200rpx;
+}
+
+.sizeLarge {
+  height: 120rpx;
+  min-width: 240rpx;
+
+  .mainText {
+    font-size: 42rpx;
+  }
+}
+
+.sizeBlock {
+  width: 100%;
+  height: 110rpx;
+
+  .mainText {
+    font-size: 40rpx;
+  }
+}
+
+// 类型样式
+.typePrimary {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  color: $color-text-white;
+}
+
+.typeSuccess {
+  background: linear-gradient(135deg, $color-done 0%, $color-primary-light 100%);
+  color: $color-text-white;
+}
+
+.typeDanger {
+  background: linear-gradient(135deg, $color-error 0%, lighten($color-error, 10%) 100%);
+  color: $color-text-white;
+}
+
+.typeWarning {
+  background: linear-gradient(135deg, $color-warning 0%, lighten($color-warning, 10%) 100%);
+  color: $color-text-white;
+}
+
+.typeDefault {
+  background: $color-bg-card;
+  color: $color-text-primary;
+  border: 4rpx solid $color-border;
+}

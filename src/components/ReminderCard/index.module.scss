@@ -1,0 +1,175 @@
+@use '@/styles/variables.scss' as *;
+
+.reminderCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  border-left: 8rpx solid $color-primary;
+  transition: all $transition-base;
+
+  &.cardDone {
+    border-left-color: $color-done;
+    background: linear-gradient(180deg, $color-done-bg 0%, $color-bg-card 40%);
+    opacity: 0.92;
+  }
+
+  &.cardDiscomfort {
+    border-left-color: $color-discomfort;
+    background: linear-gradient(180deg, $color-discomfort-bg 0%, $color-bg-card 40%);
+  }
+
+  &.highPriority {
+    border-left-width: 12rpx;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.timeBadge {
+  background: $color-primary-bg;
+  padding: 12rpx 24rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: baseline;
+  gap: 12rpx;
+}
+
+.timeLabel {
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-primary-dark;
+}
+
+.timeValue {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+}
+
+.priorityTag {
+  background: linear-gradient(135deg, $color-warning 0%, lighten($color-warning, 10%) 100%);
+  padding: 8rpx 20rpx;
+  border-radius: $radius-round;
+}
+
+.priorityText {
+  font-size: 26rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.statusBadge {
+  margin-left: auto;
+  padding: 12rpx 24rpx;
+  border-radius: $radius-round;
+}
+
+.statusDone {
+  background: $color-done-bg;
+}
+
+.statusDiscomfort {
+  background: $color-discomfort-bg;
+}
+
+.statusText {
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+
+  .statusDone & {
+    color: $color-done;
+  }
+
+  .statusDiscomfort & {
+    color: $color-discomfort;
+  }
+}
+
+.cardBody {
+  margin-bottom: $spacing-lg;
+}
+
+.title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: 1.4;
+  margin-bottom: $spacing-sm;
+}
+
+.content {
+  display: block;
+  font-size: 34rpx;
+  color: $color-text-secondary;
+  line-height: 1.7;
+}
+
+.expandTrigger {
+  margin-top: $spacing-md;
+  padding: $spacing-sm 0;
+}
+
+.expandText {
+  font-size: 30rpx;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.tipsList {
+  margin-top: $spacing-md;
+  padding: $spacing-md;
+  background: $color-bg-hover;
+  border-radius: $radius-md;
+}
+
+.tipItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+  margin-bottom: 12rpx;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.tipDot {
+  font-size: 32rpx;
+  color: $color-primary;
+  line-height: 1.6;
+  flex-shrink: 0;
+}
+
+.tipText {
+  font-size: 32rpx;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.cardActions {
+  display: flex;
+  gap: $spacing-md;
+  justify-content: space-between;
+  padding-top: $spacing-md;
+  border-top: 2rpx solid $color-divider;
+}
+
+.respondTime {
+  margin-top: $spacing-sm;
+  padding-top: $spacing-sm;
+  border-top: 2rpx dashed $color-divider;
+}
+
+.respondTimeText {
+  font-size: 26rpx;
+  color: $color-text-tertiary;
+}

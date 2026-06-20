@@ -1,0 +1,251 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: $color-bg-page;
+}
+
+.treatmentCard {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+  color: $color-text-white;
+}
+
+.treatmentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: $spacing-md;
+}
+
+.patientInfo {
+  flex: 1;
+}
+
+.patientName {
+  font-size: 42rpx;
+  font-weight: $font-weight-bold;
+  line-height: 1.3;
+  display: block;
+}
+
+.treatmentType {
+  font-size: 30rpx;
+  opacity: 0.9;
+  margin-top: 8rpx;
+  display: block;
+}
+
+.treatmentBadge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 10rpx 20rpx;
+  border-radius: $radius-round;
+  backdrop-filter: blur(10px);
+}
+
+.badgeText {
+  font-size: 26rpx;
+  font-weight: $font-weight-medium;
+  color: $color-text-white;
+}
+
+.treatmentDetail {
+  display: flex;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-md;
+  padding: $spacing-md 0;
+  border-top: 2rpx solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2rpx solid rgba(255, 255, 255, 0.2);
+}
+
+.detailItem {
+  flex: 1;
+}
+
+.detailLabel {
+  display: block;
+  font-size: 24rpx;
+  opacity: 0.8;
+  margin-bottom: 6rpx;
+}
+
+.detailValue {
+  display: block;
+  font-size: 28rpx;
+  font-weight: $font-weight-medium;
+}
+
+.progressSection {
+  margin-bottom: $spacing-sm;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.progressLabel {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.progressValue {
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+}
+
+.progressBar {
+  height: 16rpx;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: $radius-round;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-text-white;
+  border-radius: $radius-round;
+  transition: width $transition-slow ease;
+}
+
+.familySection {
+  padding-top: $spacing-md;
+  margin-top: $spacing-xs;
+  border-top: 2rpx dashed rgba(255, 255, 255, 0.25);
+}
+
+.familyTitle {
+  font-size: 26rpx;
+  opacity: 0.85;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.familyList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.familyTag {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8rpx 18rpx;
+  border-radius: $radius-round;
+}
+
+.familyTagText {
+  font-size: 26rpx;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: $spacing-lg 0 $spacing-md;
+}
+
+.sectionTitleText {
+  font-size: 38rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.reminderCount {
+  background: $color-reminder-bg;
+  padding: 8rpx 20rpx;
+  border-radius: $radius-round;
+}
+
+.countText {
+  font-size: 28rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-reminder;
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.statCard {
+  flex: 1;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+  text-align: center;
+}
+
+.statCardDone {
+  border-top: 6rpx solid $color-done;
+}
+
+.statCardPending {
+  border-top: 6rpx solid $color-reminder;
+}
+
+.statCardIssue {
+  border-top: 6rpx solid $color-discomfort;
+}
+
+.statNumber {
+  display: block;
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: 6rpx;
+
+  .statCardDone & {
+    color: $color-done;
+  }
+
+  .statCardPending & {
+    color: $color-reminder;
+  }
+
+  .statCardIssue & {
+    color: $color-discomfort;
+  }
+}
+
+.statLabel {
+  display: block;
+  font-size: 26rpx;
+  color: $color-text-secondary;
+}
+
+.emptyBox {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xl * 2 $spacing-lg;
+  text-align: center;
+  box-shadow: $shadow-card;
+}
+
+.emptyIcon {
+  display: block;
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  display: block;
+  font-size: 34rpx;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: 8rpx;
+}
+
+.emptySubText {
+  display: block;
+  font-size: 28rpx;
+  color: $color-text-tertiary;
+  line-height: 1.5;
+}

@@ -1,0 +1,307 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: $color-bg-page;
+}
+
+.clinicCard {
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+  color: $color-text-white;
+}
+
+.clinicName {
+  font-size: 44rpx;
+  font-weight: $font-weight-bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.clinicWorkHours {
+  font-size: 28rpx;
+  opacity: 0.9;
+  display: block;
+  margin-bottom: $spacing-lg;
+}
+
+.phoneButtons {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.infoSection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 2rpx solid $color-divider;
+}
+
+.sectionTitleIcon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.sectionTitleText {
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  padding: $spacing-sm 0;
+  gap: 16rpx;
+}
+
+.infoIcon {
+  font-size: 32rpx;
+  line-height: 1.6;
+  flex-shrink: 0;
+  width: 48rpx;
+  text-align: center;
+}
+
+.infoContent {
+  flex: 1;
+}
+
+.infoLabel {
+  display: block;
+  font-size: 26rpx;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.infoValue {
+  display: block;
+  font-size: 32rpx;
+  color: $color-text-primary;
+  line-height: 1.5;
+}
+
+.infoValueLink {
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.actionCards {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.actionCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  transition: all $transition-base;
+
+  &:active {
+    transform: scale(0.99);
+    background: $color-bg-hover;
+  }
+}
+
+.actionIconWrap {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: $radius-md;
+  @include flex-center;
+  flex-shrink: 0;
+
+  &.green {
+    background: $color-done-bg;
+  }
+
+  &.orange {
+    background: $color-warning-light;
+  }
+
+  &.blue {
+    background: rgba(74, 144, 217, 0.1);
+  }
+
+  &.red {
+    background: $color-error-light;
+  }
+}
+
+.actionIcon {
+  font-size: 48rpx;
+}
+
+.actionContent {
+  flex: 1;
+}
+
+.actionTitle {
+  display: block;
+  font-size: 34rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 6rpx;
+}
+
+.actionDesc {
+  display: block;
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  line-height: 1.4;
+}
+
+.actionArrow {
+  font-size: 40rpx;
+  color: $color-text-tertiary;
+  flex-shrink: 0;
+}
+
+.familySection {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-card;
+}
+
+.familyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-md;
+  border-bottom: 2rpx solid $color-divider;
+}
+
+.familyTitle {
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.addBtn {
+  background: $color-primary-bg;
+  padding: 10rpx 24rpx;
+  border-radius: $radius-round;
+}
+
+.addBtnText {
+  font-size: 28rpx;
+  color: $color-primary-dark;
+  font-weight: $font-weight-medium;
+}
+
+.familyList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.familyItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md;
+  background: $color-bg-hover;
+  border-radius: $radius-md;
+  gap: $spacing-md;
+}
+
+.familyAvatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  @include flex-center;
+  background: linear-gradient(135deg, $color-primary-bg, rgba(74, 144, 217, 0.1));
+  font-size: 36rpx;
+  flex-shrink: 0;
+}
+
+.familyInfo {
+  flex: 1;
+}
+
+.familyNameRow {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 6rpx;
+}
+
+.familyName {
+  font-size: 32rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.primaryBadge {
+  background: $color-done-bg;
+  padding: 4rpx 14rpx;
+  border-radius: $radius-round;
+}
+
+.primaryBadgeText {
+  font-size: 22rpx;
+  color: $color-done;
+  font-weight: $font-weight-semibold;
+}
+
+.familyContact {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+}
+
+.familyCallBtn {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: $color-primary;
+  @include flex-center;
+  flex-shrink: 0;
+}
+
+.familyCallIcon {
+  font-size: 32rpx;
+  color: #fff;
+}
+
+.tipCard {
+  margin-top: $spacing-lg;
+  background: $color-warning-light;
+  border-radius: $radius-md;
+  padding: $spacing-md $spacing-lg;
+  border-left: 6rpx solid $color-warning;
+}
+
+.tipTitle {
+  display: block;
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+  color: darken($color-warning, 15%);
+  margin-bottom: 8rpx;
+}
+
+.tipText {
+  display: block;
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  line-height: 1.6;
+}

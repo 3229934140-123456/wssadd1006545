@@ -1,0 +1,23 @@
+@use '@/styles/compat.scss';
+@use '@/styles/variables.scss' as *;
+
+// 全局适老化样式
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  font-size: 34rpx;
+  line-height: 1.6;
+  color: $color-text-primary;
+  background-color: $color-bg-page;
+  -webkit-font-smoothing: antialiased;
+}
+
+// 适老化：全局基础元素优化
+view, text {
+  box-sizing: border-box;
+}
+
+// 适老化：图片默认样式
+image {
+  display: block;
+}

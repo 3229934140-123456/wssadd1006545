@@ -1,0 +1,38 @@
+@use '@/styles/variables.scss' as *;
+
+.pageHeader {
+  padding: $spacing-lg $page-padding $spacing-xl;
+  background: linear-gradient(180deg, $color-primary-bg 0%, $color-bg-page 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+}
+
+.greeting {
+  display: block;
+  font-size: 30rpx;
+  color: $color-text-secondary;
+  margin-bottom: 8rpx;
+}
+
+.title {
+  display: block;
+  font-size: 52rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  line-height: 1.3;
+}
+
+.subtitle {
+  display: block;
+  font-size: 32rpx;
+  color: $color-text-secondary;
+  line-height: 1.5;
+  margin-top: $spacing-sm;
+}
+
+.dateText {
+  display: block;
+  font-size: 28rpx;
+  color: $color-primary-dark;
+  margin-top: $spacing-sm;
+  font-weight: $font-weight-medium;
+}
