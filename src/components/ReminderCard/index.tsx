@@ -9,10 +9,9 @@ import styles from './index.module.scss';
 interface ReminderCardProps {
   reminder: Reminder;
   onDone: (id: string) => void;
-  onDiscomfort: (id: string) => void;
 }
 
-const ReminderCard: React.FC<ReminderCardProps> = ({ reminder, onDone, onDiscomfort }) => {
+const ReminderCard: React.FC<ReminderCardProps> = ({ reminder, onDone }) => {
   const [expanded, setExpanded] = useState(false);
   const isDone = reminder.status === 'done';
   const hasDiscomfort = reminder.status === 'discomfort';

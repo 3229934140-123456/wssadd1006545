@@ -12,13 +12,10 @@ import type {
   ScanBindData,
   DiscomfortFormData,
   PainLevel,
-  SwellingLevel,
-  MedicationStatus,
   PhotoFeedbackData
 } from '@/types';
 import {
-  SWELLING_LEVEL_TEXT,
-  PAIN_LEVEL_TEXT
+  SWELLING_LEVEL_TEXT
 } from '@/types';
 import {
   mockTreatmentInfo,

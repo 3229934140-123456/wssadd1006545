@@ -88,21 +88,12 @@ const ClinicTasksPage: React.FC = () => {
     }
   };
 
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'pending': return '待处理';
-      case 'processing': return '处理中';
-      case 'done': return '已完成';
-      default: return status;
-    }
-  };
-
   return (
     <ScrollView
       className={styles.page}
       scrollY
       refresherEnabled
-      onRefresh={handleRefresh}
+      onRefresherRefresh={handleRefresh}
     >
       <View className={styles.header}>
         <Text className={styles.headerTitle}>👩‍⚕️ 诊所回访工作台</Text>

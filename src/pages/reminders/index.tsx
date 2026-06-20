@@ -10,7 +10,7 @@ import ReminderCard from '@/components/ReminderCard';
 import styles from './index.module.scss';
 
 const RemindersPage: React.FC = () => {
-  const { treatment, reminders, updateReminderStatus, getTodayReminders, requestSubscription } = useApp();
+  const { treatment, updateReminderStatus, getTodayReminders, requestSubscription } = useApp();
 
   const todayReminders = useMemo(() => {
     return getTodayReminders();
@@ -72,7 +72,7 @@ const RemindersPage: React.FC = () => {
       className={styles.page}
       scrollY
       refresherEnabled
-      onRefresh={() => {
+      onRefresherRefresh={() => {
         console.log('[RemindersPage] 下拉刷新');
         setTimeout(() => Taro.stopPullDownRefresh(), 800);
       }}
@@ -178,7 +178,6 @@ const RemindersPage: React.FC = () => {
             key={reminder.id}
             reminder={reminder}
             onDone={handleDone}
-            onDiscomfort={() => {}}
           />
         ))
       ) : (

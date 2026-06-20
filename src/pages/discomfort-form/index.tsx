@@ -17,10 +17,9 @@ import styles from './index.module.scss';
 
 const DiscomfortFormPage: React.FC = () => {
   const router = useRouter();
-  const { reminders, clinic, submitDiscomfortForm, getDiscomfortLevel } = useApp();
+  const { reminders, clinic, submitDiscomfortForm } = useApp();
 
   const reminderId = router.params.reminderId as string;
-  const from = router.params.from as string;
 
   const currentReminder = useMemo(() => {
     return reminderId ? reminders.find(r => r.id === reminderId) : undefined;
@@ -81,7 +80,7 @@ const DiscomfortFormPage: React.FC = () => {
       nextAction
     };
 
-    const report = submitDiscomfortForm(formData);
+    submitDiscomfortForm(formData);
 
     setShowSuccess(true);
 
