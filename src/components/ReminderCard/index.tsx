@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text } from '@tarojs/components';
+import Taro from '@tarojs/taro';
 import classnames from 'classnames';
 import type { Reminder } from '@/types';
 import BigButton from '@/components/BigButton';
@@ -15,6 +16,12 @@ const ReminderCard: React.FC<ReminderCardProps> = ({ reminder, onDone, onDiscomf
   const [expanded, setExpanded] = useState(false);
   const isDone = reminder.status === 'done';
   const hasDiscomfort = reminder.status === 'discomfort';
+
+  const handleDiscomfort = () => {
+    Taro.navigateTo({
+      url: `/pages/discomfort-form/index?reminderId=${reminder.id}`
+    });
+  };
 
   const getStatusText = () => {
     if (isDone) return '✓ 我已做到';
@@ -97,7 +104,7 @@ const ReminderCard: React.FC<ReminderCardProps> = ({ reminder, onDone, onDiscomf
             type="danger"
             size="normal"
             icon="⚠"
-            onClick={() => onDiscomfort(reminder.id)}
+            onClick={handleDiscomfort}
           />
         </View>
       )}

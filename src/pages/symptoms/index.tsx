@@ -55,7 +55,8 @@ const SymptomsPage: React.FC = () => {
       swellingLevel,
       medicationStatus,
       bleeding,
-      fever
+      fever,
+      source: 'daily'
     });
 
     Taro.showToast({

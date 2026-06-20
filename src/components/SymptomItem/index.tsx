@@ -20,7 +20,19 @@ const SymptomItem: React.FC<SymptomItemProps> = ({ record }) => {
   return (
     <View className={styles.symptomItem}>
       <View className={styles.itemHeader}>
-        <Text className={styles.dateText}>{formatDate(record.date, 'M月D日')}反馈</Text>
+        <View className={styles.headerLeft}>
+          <Text className={styles.dateText}>{formatDate(record.date, 'M月D日')}反馈</Text>
+          {record.source === 'discomfort' && (
+            <View className={styles.sourceTag}>
+              <Text className={styles.sourceTagText}>⚠ 不适反馈</Text>
+            </View>
+          )}
+          {record.source === 'daily' && (
+            <View className={classnames(styles.sourceTag, styles.sourceTagDaily)}>
+              <Text className={styles.sourceTagText}>日常记录</Text>
+            </View>
+          )}
+        </View>
         <View className={classnames(styles.painBadge, getPainColor(record.painLevel))}>
           <Text className={styles.painText}>疼痛 {record.painLevel}/5</Text>
         </View>

@@ -1,0 +1,360 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: 0 $page-padding $spacing-xl;
+  background: $color-bg-page;
+}
+
+.header {
+  padding: $spacing-xl 0 $spacing-lg;
+  background: linear-gradient(135deg, $color-primary 0%, $color-primary-light 100%);
+  margin: 0 (-$page-padding) $spacing-lg;
+  padding-left: $page-padding;
+  padding-right: $page-padding;
+  color: $color-text-white;
+}
+
+.headerTitle {
+  font-size: 44rpx;
+  font-weight: $font-weight-bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.headerSubtitle {
+  font-size: 28rpx;
+  opacity: 0.9;
+  display: block;
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+}
+
+.statCard {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  text-align: center;
+}
+
+.statNumber {
+  font-size: 44rpx;
+  font-weight: $font-weight-bold;
+  display: block;
+  line-height: 1.2;
+}
+
+.statLabel {
+  font-size: 24rpx;
+  opacity: 0.9;
+  display: block;
+  margin-top: 4rpx;
+}
+
+.tabs {
+  display: flex;
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: 8rpx;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.tabBtn {
+  flex: 1;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+  text-align: center;
+  transition: all $transition-base;
+
+  &.active {
+    background: $color-primary;
+  }
+}
+
+.tabBtnText {
+  font-size: 30rpx;
+  color: $color-text-secondary;
+  font-weight: $font-weight-medium;
+
+  .tabBtn.active & {
+    color: $color-text-white;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.tabBadge {
+  display: inline-block;
+  min-width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  padding: 0 10rpx;
+  background: $color-error;
+  color: #fff;
+  border-radius: $radius-round;
+  font-size: 22rpx;
+  font-weight: $font-weight-bold;
+  margin-left: 8rpx;
+
+  .tabBtn.active & {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.emptyBox {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-xl * 2 $spacing-lg;
+  text-align: center;
+  box-shadow: $shadow-card;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  display: block;
+  margin-bottom: $spacing-md;
+}
+
+.emptyText {
+  font-size: 34rpx;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.emptySubText {
+  font-size: 28rpx;
+  color: $color-text-tertiary;
+  line-height: 1.5;
+}
+
+.taskCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+  border-left: 8rpx solid $color-border;
+  transition: all $transition-base;
+
+  &.priorityHigh {
+    border-left-color: $color-error;
+  }
+
+  &.priorityNormal {
+    border-left-color: $color-warning;
+  }
+
+  &.priorityLow {
+    border-left-color: $color-primary;
+  }
+
+  &.statusDone {
+    opacity: 0.7;
+  }
+}
+
+.taskHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: $spacing-sm;
+}
+
+.taskPatientInfo {
+  flex: 1;
+}
+
+.taskPatientName {
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.taskTreatment {
+  font-size: 26rpx;
+  color: $color-text-secondary;
+  display: block;
+}
+
+.priorityBadge {
+  padding: 8rpx 16rpx;
+  border-radius: $radius-round;
+  flex-shrink: 0;
+
+  &.high {
+    background: $color-error-light;
+  }
+
+  &.normal {
+    background: $color-warning-light;
+  }
+
+  &.low {
+    background: $color-done-bg;
+  }
+}
+
+.priorityText {
+  font-size: 24rpx;
+  font-weight: $font-weight-semibold;
+
+  .high & {
+    color: $color-error;
+  }
+
+  .normal & {
+    color: $color-warning;
+  }
+
+  .low & {
+    color: $color-done;
+  }
+}
+
+.taskContent {
+  padding: $spacing-md 0;
+  border-top: 2rpx solid $color-divider;
+  border-bottom: 2rpx solid $color-divider;
+  margin-bottom: $spacing-md;
+}
+
+.taskTitle {
+  font-size: 32rpx;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.taskDesc {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  display: block;
+}
+
+.taskDetails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+}
+
+.detailTag {
+  padding: 8rpx 16rpx;
+  background: $color-bg-hover;
+  border-radius: $radius-round;
+
+  &.danger {
+    background: $color-error-light;
+  }
+}
+
+.detailTagText {
+  font-size: 24rpx;
+  color: $color-text-secondary;
+
+  .danger & {
+    color: $color-error;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.taskFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskTime {
+  font-size: 24rpx;
+  color: $color-text-tertiary;
+}
+
+.taskActions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.actionBtn {
+  padding: 12rpx 24rpx;
+  border-radius: $radius-round;
+  transition: all $transition-base;
+
+  &.process {
+    background: $color-warning-light;
+  }
+
+  &.done {
+    background: $color-done-bg;
+  }
+
+  &.call {
+    background: $color-primary-bg;
+  }
+}
+
+.actionBtnText {
+  font-size: 26rpx;
+  font-weight: $font-weight-medium;
+
+  .process & {
+    color: $color-warning;
+  }
+
+  .done & {
+    color: $color-done;
+  }
+
+  .call & {
+    color: $color-primary-dark;
+  }
+}
+
+.statusBadge {
+  padding: 8rpx 20rpx;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+}
+
+.statusText {
+  font-size: 26rpx;
+  color: $color-text-tertiary;
+  font-weight: $font-weight-medium;
+}
+
+.photoPreviewRow {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.photoPreviewItem {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: $radius-sm;
+  overflow: hidden;
+}
+
+.photoPreviewImg {
+  width: 100%;
+  height: 100%;
+}
+
+.refreshTip {
+  text-align: center;
+  padding: $spacing-md;
+  font-size: 26rpx;
+  color: $color-text-tertiary;
+}

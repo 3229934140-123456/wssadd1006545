@@ -3,7 +3,10 @@ export default defineAppConfig({
     'pages/reminders/index',
     'pages/symptoms/index',
     'pages/contact/index',
-    'pages/feedback-detail/index'
+    'pages/clinic-tasks/index',
+    'pages/feedback-detail/index',
+    'pages/discomfort-form/index',
+    'pages/family-invite/index'
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -29,6 +32,10 @@ export default defineAppConfig({
       {
         pagePath: 'pages/contact/index',
         text: '联系诊所'
+      },
+      {
+        pagePath: 'pages/clinic-tasks/index',
+        text: '诊所回访'
       }
     ]
   }

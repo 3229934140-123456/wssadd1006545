@@ -10,11 +10,11 @@ import ReminderCard from '@/components/ReminderCard';
 import styles from './index.module.scss';
 
 const RemindersPage: React.FC = () => {
-  const { treatment, reminders, updateReminderStatus, addDiscomfortReport } = useApp();
+  const { treatment, reminders, updateReminderStatus, getTodayReminders, requestSubscription } = useApp();
 
   const todayReminders = useMemo(() => {
-    return reminders.filter(r => r.dayOffset === 0);
-  }, [reminders]);
+    return getTodayReminders();
+  }, [getTodayReminders]);
 
   const stats = useMemo(() => {
     const done = todayReminders.filter(r => r.status === 'done').length;
@@ -43,32 +43,24 @@ const RemindersPage: React.FC = () => {
     });
   };
 
-  const handleDiscomfort = (reminderId: string) => {
-    console.log('[RemindersPage] 报告不适:', reminderId);
-    updateReminderStatus(reminderId, 'discomfort');
+  const handleSubscribe = async () => {
+    console.log('[RemindersPage] 请求订阅提醒');
+    const success = await requestSubscription();
+    if (success) {
+      Taro.showToast({ title: '已开启提醒，会及时通知您~', icon: 'success' });
+    }
+  };
 
-    const reminder = reminders.find(r => r.id === reminderId);
-    addDiscomfortReport({
-      reminderId,
-      type: 'other',
-      description: `针对提醒"${reminder?.title || reminderId}"报告不适`,
-      level: 'mild',
-      photos: []
-    });
-
+  const handleCallFamily = (phone: string, name: string) => {
     Taro.showModal({
-      title: '别担心，我们来了',
-      content: '您的情况已经同步给诊所的回访人员啦。\n\n如果现在就不舒服，可以给诊所打电话，或者拍照上传告诉我们具体情况。',
-      confirmText: '我要打电话',
-      cancelText: '先去反馈',
+      title: '拨打家属电话',
+      content: `确定要给${name}打电话吗？`,
+      confirmText: '拨打',
       success: (res) => {
         if (res.confirm) {
-          Taro.makePhoneCall({
-            phoneNumber: '010-88886666'
-          }).catch(err => console.error('[拨打电话] 失败:', err));
-        } else if (res.cancel) {
-          Taro.navigateTo({
-            url: '/pages/feedback-detail/index?from=reminder&reminderId=' + reminderId
+          Taro.makePhoneCall({ phoneNumber: phone }).catch(err => {
+            console.error('[拨打家属电话] 失败:', err);
+            Taro.showToast({ title: '拨号失败，请稍后重试', icon: 'none' });
           });
         }
       }
@@ -128,14 +120,27 @@ const RemindersPage: React.FC = () => {
             </View>
           </View>
 
+          <View className={styles.subscribeSection} onClick={handleSubscribe}>
+            <View className={styles.subscribeIcon}>🔔</View>
+            <View className={styles.subscribeContent}>
+              <Text className={styles.subscribeTitle}>开启消息提醒</Text>
+              <Text className={styles.subscribeDesc}>关键节点会自动通知您和家人</Text>
+            </View>
+            <Text className={styles.subscribeArrow}>›</Text>
+          </View>
+
           {treatment.familyMembers.length > 0 && (
             <View className={styles.familySection}>
               <Text className={styles.familyTitle}>👨‍👩‍👧 家人一起关心您：</Text>
               <View className={styles.familyList}>
                 {treatment.familyMembers.map(fm => (
-                  <View key={fm.id} className={styles.familyTag}>
+                  <View
+                    key={fm.id}
+                    className={styles.familyTag}
+                    onClick={() => handleCallFamily(fm.phone, fm.name)}
+                  >
                     <Text className={styles.familyTagText}>
-                      {fm.name}（{fm.relationship}）{fm.isPrimary && '⭐'}
+                      {fm.name}（{fm.relationship}）{fm.isPrimary && '⭐'} 📞
                     </Text>
                   </View>
                 ))}
@@ -173,7 +178,7 @@ const RemindersPage: React.FC = () => {
             key={reminder.id}
             reminder={reminder}
             onDone={handleDone}
-            onDiscomfort={handleDiscomfort}
+            onDiscomfort={() => {}}
           />
         ))
       ) : (

@@ -114,6 +114,47 @@
   transition: width $transition-slow ease;
 }
 
+.subscribeSection {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-top: $spacing-md;
+  margin-bottom: $spacing-sm;
+
+  &:active {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+.subscribeIcon {
+  font-size: 48rpx;
+  margin-right: $spacing-md;
+}
+
+.subscribeContent {
+  flex: 1;
+}
+
+.subscribeTitle {
+  display: block;
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+  margin-bottom: 4rpx;
+}
+
+.subscribeDesc {
+  display: block;
+  font-size: 24rpx;
+  opacity: 0.8;
+}
+
+.subscribeArrow {
+  font-size: 40rpx;
+  opacity: 0.7;
+}
+
 .familySection {
   padding-top: $spacing-md;
   margin-top: $spacing-xs;

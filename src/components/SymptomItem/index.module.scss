@@ -11,16 +11,44 @@
 .itemHeader {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: $spacing-md;
   padding-bottom: $spacing-md;
   border-bottom: 2rpx solid $color-divider;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
 }
 
 .dateText {
   font-size: 34rpx;
   font-weight: $font-weight-semibold;
   color: $color-text-primary;
+}
+
+.sourceTag {
+  display: inline-block;
+  background: $color-error-light;
+  padding: 4rpx 16rpx;
+  border-radius: $radius-round;
+  align-self: flex-start;
+
+  &.sourceTagDaily {
+    background: $color-primary-light;
+  }
+}
+
+.sourceTagText {
+  font-size: 22rpx;
+  font-weight: $font-weight-medium;
+  color: $color-error;
+
+  .sourceTagDaily & {
+    color: $color-primary;
+  }
 }
 
 .painBadge {

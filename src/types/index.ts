@@ -24,12 +24,12 @@ export interface Reminder {
   priority: 'high' | 'normal';
   status: ReminderStatus;
   respondedAt?: string;
+  discomfortReportId?: string;
 }
 
 // 疼痛程度
 export type PainLevel = 0 | 1 | 2 | 3 | 4 | 5;
 
-// 疼痛等级文字
 export const PAIN_LEVEL_TEXT: Record<PainLevel, string> = {
   0: '完全不痛',
   1: '轻微不适',
@@ -71,6 +71,8 @@ export interface SymptomRecord {
   note?: string;
   photos?: string[];
   createdAt: string;
+  source: 'daily' | 'discomfort';
+  reminderId?: string;
 }
 
 // 治疗信息
@@ -85,6 +87,7 @@ export interface TreatmentInfo {
   teethPosition?: string;
   expectedRecoveryDays: number;
   familyMembers: FamilyMember[];
+  boundAt?: string;
 }
 
 // 家属信息
@@ -94,6 +97,16 @@ export interface FamilyMember {
   relationship: string;
   phone: string;
   isPrimary: boolean;
+  joinedAt?: string;
+}
+
+// 家属邀请信息
+export interface FamilyInvite {
+  treatmentId: string;
+  patientName: string;
+  inviteCode: string;
+  qrCodeUrl?: string;
+  expireAt: string;
 }
 
 // 诊所信息
@@ -106,14 +119,82 @@ export interface ClinicInfo {
   returnVisitDate?: string;
 }
 
-// 不适反馈
+// 不适反馈表单
+export interface DiscomfortFormData {
+  reminderId?: string;
+  painLevel: PainLevel;
+  swellingLevel: SwellingLevel;
+  medicationStatus: MedicationStatus;
+  bleeding: boolean;
+  fever: boolean;
+  photos: string[];
+  note?: string;
+  nextAction: 'call' | 'photo' | 'wait';
+}
+
+// 不适反馈（与症状记录关联，诊所端可见）
 export interface DiscomfortReport {
   id: string;
+  treatmentId: string;
+  patientName: string;
   reminderId?: string;
-  type: 'pain' | 'swelling' | 'bleeding' | 'fever' | 'other';
-  description: string;
-  level: 'mild' | 'moderate' | 'severe';
+  reminderTitle?: string;
+  painLevel: PainLevel;
+  swellingLevel: SwellingLevel;
+  medicationStatus: MedicationStatus;
+  bleeding: boolean;
+  fever: boolean;
   photos: string[];
+  note?: string;
   createdAt: string;
-  syncedToClinic: boolean;
+  handledAt?: string;
+  handledBy?: string;
+  status: 'pending' | 'contacted' | 'resolved';
+  nextAction: 'call' | 'photo' | 'wait';
+}
+
+// 扫码绑定治疗的数据结构（二维码内容）
+export interface ScanBindData {
+  type: 'treatment-bind';
+  version: '1.0';
+  data: {
+    treatmentId: string;
+    patientName: string;
+    patientAge: number;
+    treatmentType: TreatmentType;
+    treatmentDate: string;
+    doctorName: string;
+    clinicName: string;
+    teethPosition?: string;
+    expectedRecoveryDays: number;
+    returnVisitDate?: string;
+    clinic: ClinicInfo;
+  };
+}
+
+// 订阅消息模板
+export interface SubscriptionTemplate {
+  id: string;
+  title: string;
+  desc: string;
+  tmplId: string;
+}
+
+// 诊所回访待处理任务
+export interface ClinicTask {
+  id: string;
+  type: 'discomfort' | 'symptom' | 'followup';
+  patientName: string;
+  treatmentType: TreatmentType;
+  daysAfter: number;
+  title: string;
+  content: string;
+  priority: 'high' | 'normal' | 'low';
+  report?: DiscomfortReport;
+  symptom?: SymptomRecord;
+  createdAt: string;
+  status: 'pending' | 'processing' | 'done';
+  handledAt?: string;
+  handledBy?: string;
+  note?: string;
 }

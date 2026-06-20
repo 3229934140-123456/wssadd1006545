@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import { useApp } from '@/store/AppContext';
+import { TREATMENT_TYPE_MAP, type ScanBindData, type TreatmentType } from '@/types';
 import PageHeader from '@/components/PageHeader';
 import BigButton from '@/components/BigButton';
 import styles from './index.module.scss';
 
 const ContactPage: React.FC = () => {
-  const { clinic, treatment } = useApp();
+  const { clinic, treatment, bindTreatment, simulateScanCode } = useApp();
 
   const handleCallClinic = () => {
     console.log('[ContactPage] 拨打诊所电话');
@@ -30,10 +31,58 @@ const ContactPage: React.FC = () => {
 
   const handleScanBind = () => {
     console.log('[ContactPage] 扫码绑定');
-    Taro.showToast({
-      title: '扫码功能需真机体验',
-      icon: 'none',
-      duration: 1500
+    Taro.scanCode({
+      onlyFromCamera: false,
+      success: (res) => {
+        console.log('[ContactPage] 扫码结果:', res.result);
+        try {
+          const scanData = JSON.parse(res.result) as ScanBindData;
+          if (scanData.type === 'treatment-bind') {
+            bindTreatment(scanData);
+            Taro.showToast({ title: '绑定成功！', icon: 'success' });
+            setTimeout(() => {
+              Taro.switchTab({ url: '/pages/reminders/index' });
+            }, 1500);
+          } else {
+            Taro.showToast({ title: '二维码不正确', icon: 'none' });
+          }
+        } catch (e) {
+          console.log('[ContactPage] 扫码解析失败，使用模拟数据');
+          Taro.showActionSheet({
+            itemList: ['模拟：拔牙手术', '模拟：种植牙手术', '模拟：牙周手术'],
+            success: (actionRes) => {
+              const types: TreatmentType[] = ['extraction', 'implant', 'periodontal'];
+              const mockData = simulateScanCode(types[actionRes.tapIndex]);
+              bindTreatment(mockData);
+              Taro.showToast({ 
+                title: `已绑定：${TREATMENT_TYPE_MAP[types[actionRes.tapIndex]]}`, 
+                icon: 'success' 
+              });
+              setTimeout(() => {
+                Taro.switchTab({ url: '/pages/reminders/index' });
+              }, 1500);
+            }
+          });
+        }
+      },
+      fail: (err) => {
+        console.error('[ContactPage] 扫码失败:', err);
+        Taro.showActionSheet({
+          itemList: ['模拟：拔牙手术', '模拟：种植牙手术', '模拟：牙周手术'],
+          success: (actionRes) => {
+            const types: TreatmentType[] = ['extraction', 'implant', 'periodontal'];
+            const mockData = simulateScanCode(types[actionRes.tapIndex]);
+            bindTreatment(mockData);
+            Taro.showToast({ 
+              title: `已绑定：${TREATMENT_TYPE_MAP[types[actionRes.tapIndex]]}`, 
+              icon: 'success' 
+            });
+            setTimeout(() => {
+              Taro.switchTab({ url: '/pages/reminders/index' });
+            }, 1500);
+          }
+        });
+      }
     });
   };
 
@@ -58,7 +107,7 @@ const ContactPage: React.FC = () => {
 
   const handleAddFamily = () => {
     console.log('[ContactPage] 添加家属');
-    Taro.showToast({ title: '请让家属扫码加入', icon: 'none', duration: 2000 });
+    Taro.navigateTo({ url: '/pages/family-invite/index' });
   };
 
   const handleCallFamily = (phone: string, name: string) => {
