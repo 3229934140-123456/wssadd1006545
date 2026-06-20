@@ -1,0 +1,265 @@
+.page {
+  min-height: 100vh;
+  background: #F5FAF7;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  background: linear-gradient(135deg, #2CB67D 0%, #45D69A 100%);
+  padding: 40rpx 32rpx;
+  color: #fff;
+}
+
+.sourceRow {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.sourceBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sourceDaily {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sourceDiscomfort {
+  background: #FFEBEE;
+  .sourceBadgeText { color: #F44336; }
+}
+
+.sourcePhoto {
+  background: #FFF4E6;
+  .sourceBadgeText { color: #FF9F43; }
+}
+
+.sourceBadgeText {
+  font-size: 26rpx;
+  color: #fff;
+  font-weight: 500;
+}
+
+.discomfortBadge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+}
+
+.discomfortText {
+  font-size: 26rpx;
+  color: #fff;
+}
+
+.title {
+  font-size: 38rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 8rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.section {
+  background: #fff;
+  margin: 20rpx 24rpx;
+  border-radius: 20rpx;
+  padding: 28rpx;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.sectionIcon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.sectionTitle {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+}
+
+.detailList {
+  background: #F5FAF7;
+  border-radius: 12rpx;
+  padding: 8rpx 0;
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 24rpx;
+  border-bottom: 1rpx solid #E8F0EB;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detailLabel {
+  font-size: 28rpx;
+  color: #8A9AA3;
+}
+
+.detailValue {
+  font-size: 28rpx;
+  color: #2C3E50;
+  font-weight: 500;
+}
+
+.painBadge {
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.painLow {
+  background: #E8F5E9;
+  .painText { color: #4CAF50; }
+}
+
+.painMid {
+  background: #FFF9E6;
+  .painText { color: #FF9F43; }
+}
+
+.painHigh {
+  background: #FFEBEE;
+  .painText { color: #F44336; }
+}
+
+.painText {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.textDanger { color: #F44336 !important; }
+.textWarning { color: #FF9F43 !important; }
+
+.abnormalList {
+  display: flex;
+  gap: 12rpx;
+  flex-wrap: wrap;
+}
+
+.abnormalTag {
+  padding: 6rpx 14rpx;
+  border-radius: 8rpx;
+}
+
+.abnormalDanger {
+  background: #FFEBEE;
+  .abnormalText { color: #F44336; }
+}
+
+.abnormalText {
+  font-size: 24rpx;
+}
+
+.photoGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.photoItem {
+  width: calc(33.33% - 12rpx);
+  aspect-ratio: 1;
+  border-radius: 12rpx;
+  overflow: hidden;
+  background: #F0F5F2;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+}
+
+.photoTip {
+  font-size: 24rpx;
+  color: #8A9AA3;
+  text-align: center;
+  margin-top: 16rpx;
+}
+
+.noteBox {
+  background: #FFF9F0;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  border-left: 4rpx solid #FF9F43;
+}
+
+.noteText {
+  font-size: 28rpx;
+  color: #5D4037;
+  line-height: 1.6;
+}
+
+.tipSection {
+  background: linear-gradient(135deg, #F0FFF4 0%, #E8F5E9 100%);
+  margin: 20rpx 24rpx;
+  border-radius: 20rpx;
+  padding: 28rpx;
+}
+
+.tipTitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2E7D32;
+  margin-bottom: 16rpx;
+}
+
+.tipList {
+  padding-left: 8rpx;
+}
+
+.tipItem {
+  display: block;
+  font-size: 26rpx;
+  color: #4A6C4F;
+  line-height: 2;
+}
+
+.bottomActions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 20rpx 24rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid #E8F0EB;
+  display: flex;
+  gap: 16rpx;
+}
+
+.emptyBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 40rpx;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  margin-bottom: 24rpx;
+}
+
+.emptyText {
+  font-size: 32rpx;
+  color: #4A5A63;
+  margin-bottom: 16rpx;
+}

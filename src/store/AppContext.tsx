@@ -51,6 +51,7 @@ interface AppContextType extends AppState {
   addFamilyMember: (member: Omit<FamilyMember, 'id' | 'joinedAt'>) => void;
   removeFamilyMember: (memberId: string) => void;
   handleClinicTask: (taskId: string, status: 'processing' | 'done', note?: string) => void;
+  addTaskNote: (taskId: string, content: string) => void;
   getTodayReminders: () => Reminder[];
   getRemindersForDay: (dayOffset: number) => Reminder[];
   getNextKeyReminders: () => Reminder[];
@@ -269,7 +270,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       priority: newReport.status === 'pending' && (formData.bleeding || formData.fever || formData.painLevel >= 4) ? 'high' : 'normal',
       report: newReport,
       createdAt: getNowStr(),
-      status: 'pending'
+      status: 'pending',
+      notes: []
     };
 
     setState(prev => {
@@ -365,7 +367,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       priority: data.from === 'emergency' ? 'high' : 'normal',
       report: newReport,
       createdAt: nowStr,
-      status: 'pending'
+      status: 'pending',
+      notes: []
     };
 
     setState(prev => ({
@@ -425,6 +428,14 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const handleClinicTask = useCallback((taskId: string, status: 'processing' | 'done', note?: string) => {
     console.log('[AppContext] 处理诊所任务:', taskId, status, note);
+    const nowStr = getNowStr();
+    const newNote = {
+      id: `note_${Date.now()}`,
+      content: note || (status === 'processing' ? '开始处理' : '处理完成'),
+      operator: '回访人员',
+      createdAt: nowStr,
+      statusChange: status
+    };
     setState(prev => ({
       ...prev,
       clinicTasks: prev.clinicTasks.map(t =>
@@ -432,16 +443,35 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
           ? {
               ...t,
               status,
-              handledAt: getNowStr(),
+              handledAt: nowStr,
               handledBy: '回访人员',
-              note: note || t.note
+              note: note || t.note,
+              notes: [...t.notes, newNote]
             }
           : t
       ),
       discomfortReports: prev.discomfortReports.map(r =>
         r.id === prev.clinicTasks.find(t => t.id === taskId)?.report?.id
-          ? { ...r, status: status === 'done' ? 'resolved' : 'contacted', handledAt: getNowStr() }
+          ? { ...r, status: status === 'done' ? 'resolved' : 'contacted', handledAt: nowStr }
           : r
+      )
+    }));
+  }, []);
+
+  const addTaskNote = useCallback((taskId: string, content: string) => {
+    console.log('[AppContext] 添加任务备注:', taskId, content);
+    const newNote = {
+      id: `note_${Date.now()}`,
+      content,
+      operator: '回访人员',
+      createdAt: getNowStr()
+    };
+    setState(prev => ({
+      ...prev,
+      clinicTasks: prev.clinicTasks.map(t =>
+        t.id === taskId
+          ? { ...t, notes: [...t.notes, newNote] }
+          : t
       )
     }));
   }, []);
@@ -527,6 +557,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         addFamilyMember,
         removeFamilyMember,
         handleClinicTask,
+        addTaskNote,
         getTodayReminders,
         getRemindersForDay,
         getNextKeyReminders,

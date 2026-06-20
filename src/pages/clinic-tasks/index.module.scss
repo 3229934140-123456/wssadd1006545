@@ -394,6 +394,27 @@
   height: 100%;
 }
 
+.latestProgress {
+  margin-top: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  background: $color-primary-bg;
+  border-radius: $radius-sm;
+  border-left: 4rpx solid $color-primary;
+}
+
+.latestProgressLabel {
+  font-size: 24rpx;
+  color: $color-text-secondary;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.latestProgressText {
+  font-size: 26rpx;
+  color: $color-text-primary;
+  line-height: 1.5;
+}
+
 .refreshTip {
   text-align: center;
   padding: $spacing-md;

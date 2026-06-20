@@ -1,0 +1,332 @@
+.page {
+  min-height: 100vh;
+  background: #F5FAF7;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  background: #fff;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #E8F0EB;
+}
+
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.patientInfo {
+  flex: 1;
+}
+
+.patientName {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  line-height: 1.4;
+}
+
+.patientDays {
+  font-size: 28rpx;
+  color: #8A9AA3;
+  margin-top: 6rpx;
+}
+
+.statusBadge {
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  margin-left: 16rpx;
+  flex-shrink: 0;
+}
+
+.statusPending {
+  background: #FFF4E6;
+  .statusText { color: #FF9F43; }
+}
+
+.statusProcessing {
+  background: #E3F2FD;
+  .statusText { color: #2196F3; }
+}
+
+.statusDone {
+  background: #E8F5E9;
+  .statusText { color: #4CAF50; }
+}
+
+.statusText {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.sourceRow {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.sourceBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  background: #E8F5E9;
+}
+
+.sourcePhoto {
+  background: #FFF4E6;
+  .sourceBadgeText { color: #FF9F43; }
+}
+
+.sourceDiscomfort {
+  background: #E3F2FD;
+  .sourceBadgeText { color: #2196F3; }
+}
+
+.sourceEmergency {
+  background: #FFEBEE;
+  .sourceBadgeText { color: #F44336; }
+}
+
+.sourceBadgeText {
+  font-size: 24rpx;
+  color: #2CB67D;
+  font-weight: 500;
+}
+
+.priorityHigh {
+  display: inline-flex;
+  align-items: center;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  background: #FFEBEE;
+}
+
+.priorityText {
+  font-size: 24rpx;
+  color: #F44336;
+  font-weight: 500;
+}
+
+.taskTitle {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #2C3E50;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+}
+
+.taskContent {
+  font-size: 28rpx;
+  color: #4A5A63;
+  line-height: 1.6;
+}
+
+.section {
+  background: #fff;
+  margin: 20rpx 24rpx;
+  border-radius: 20rpx;
+  padding: 28rpx;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.sectionIcon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.sectionTitle {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #2C3E50;
+}
+
+.detailGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.detailItem {
+  width: calc(50% - 8rpx);
+  background: #F5FAF7;
+  border-radius: 12rpx;
+  padding: 16rpx;
+}
+
+.detailLabel {
+  font-size: 24rpx;
+  color: #8A9AA3;
+  margin-bottom: 8rpx;
+}
+
+.detailValue {
+  font-size: 28rpx;
+  color: #2C3E50;
+  font-weight: 500;
+}
+
+.textDanger { color: #F44336 !important; }
+.textWarning { color: #FF9F43 !important; }
+
+.photoSection {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F5F2;
+}
+
+.photoTitle {
+  font-size: 28rpx;
+  color: #2C3E50;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.photoRow {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+
+.photoItem {
+  width: calc(33.33% - 12rpx);
+  aspect-ratio: 1;
+  border-radius: 12rpx;
+  overflow: hidden;
+  background: #F0F5F2;
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+}
+
+.patientNote {
+  margin-top: 20rpx;
+  padding: 16rpx;
+  background: #FFF9F0;
+  border-radius: 12rpx;
+}
+
+.patientNoteLabel {
+  font-size: 26rpx;
+  color: #FF9F43;
+  font-weight: 500;
+}
+
+.patientNoteText {
+  font-size: 28rpx;
+  color: #4A5A63;
+  margin-top: 8rpx;
+  line-height: 1.6;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 40rpx;
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: 28rpx;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.timelineDot {
+  position: absolute;
+  left: -40rpx;
+  top: 6rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: #ccc;
+  border: 4rpx solid #fff;
+  box-shadow: 0 0 0 2rpx #E8F0EB;
+}
+
+.dotCreate { background: #2CB67D; }
+.dotStatus { background: #2196F3; }
+.dotNote { background: #FF9F43; }
+
+.timelineContent {
+  background: #F5FAF7;
+  border-radius: 12rpx;
+  padding: 16rpx;
+}
+
+.timelineText {
+  font-size: 28rpx;
+  color: #2C3E50;
+  line-height: 1.5;
+}
+
+.timelineTime {
+  font-size: 24rpx;
+  color: #8A9AA3;
+  margin-top: 8rpx;
+}
+
+.noteInput {
+  width: 100%;
+  height: 160rpx;
+  background: #F5FAF7;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #2C3E50;
+  box-sizing: border-box;
+}
+
+.noteActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16rpx;
+}
+
+.noteCount {
+  font-size: 24rpx;
+  color: #8A9AA3;
+}
+
+.bottomActions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 20rpx 24rpx;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid #E8F0EB;
+  display: flex;
+  gap: 16rpx;
+}
+
+.emptyBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 120rpx 40rpx;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  margin-bottom: 24rpx;
+}
+
+.emptyText {
+  font-size: 32rpx;
+  color: #4A5A63;
+  margin-bottom: 16rpx;
+}

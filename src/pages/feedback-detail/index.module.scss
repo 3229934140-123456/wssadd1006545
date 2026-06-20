@@ -225,12 +225,12 @@
   aspect-ratio: 1;
   border: 3rpx dashed $color-primary-light;
   border-radius: $radius-md;
-  background: $color-primary-light + 10;
+  background: $color-primary-bg;
   @include flex-center;
   flex-direction: column;
 
   &:active {
-    background: $color-primary-light + 30;
+    background: $color-bg-hover;
   }
 }
 
@@ -261,15 +261,15 @@
   border-radius: $radius-md;
   background: $color-bg-hover;
   border: 3rpx solid transparent;
-  transition: all $transition-normal ease;
+  transition: all $transition-base ease;
 
   &.active {
-    background: $color-primary-light + 20;
+    background: $color-primary-light;
     border-color: $color-primary;
   }
 
   &:active {
-    background: $color-primary-light + 10;
+    background: $color-primary-bg;
   }
 }
 

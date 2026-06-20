@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, ScrollView } from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import classnames from 'classnames';
@@ -7,34 +7,78 @@ import { TREATMENT_TYPE_MAP } from '@/types';
 import { getRecoveryProgress, getDaysSinceTreatment, formatDate } from '@/utils/date';
 import PageHeader from '@/components/PageHeader';
 import ReminderCard from '@/components/ReminderCard';
+import BigButton from '@/components/BigButton';
 import styles from './index.module.scss';
 
 const RemindersPage: React.FC = () => {
-  const { treatment, updateReminderStatus, getTodayReminders, requestSubscription } = useApp();
+  const { treatment, updateReminderStatus, getRemindersForDay, getNextKeyReminders, requestSubscription } = useApp();
 
-  const todayReminders = useMemo(() => {
-    return getTodayReminders();
-  }, [getTodayReminders]);
-
-  const stats = useMemo(() => {
-    const done = todayReminders.filter(r => r.status === 'done').length;
-    const pending = todayReminders.filter(r => r.status === 'pending').length;
-    const discomfort = todayReminders.filter(r => r.status === 'discomfort').length;
-    return { done, pending, discomfort, total: todayReminders.length };
-  }, [todayReminders]);
-
-  const recoveryProgress = useMemo(() => {
-    if (!treatment) return 0;
-    return getRecoveryProgress(treatment.treatmentDate, treatment.expectedRecoveryDays);
-  }, [treatment]);
+  const [viewDayOffset, setViewDayOffset] = useState<number>(0);
 
   const daysSince = useMemo(() => {
     if (!treatment) return 0;
     return getDaysSinceTreatment(treatment.treatmentDate);
   }, [treatment]);
 
+  const currentViewDay = daysSince + viewDayOffset;
+
+  const dayReminders = useMemo(() => {
+    return getRemindersForDay(currentViewDay);
+  }, [getRemindersForDay, currentViewDay]);
+
+  const nextKeyReminders = useMemo(() => {
+    return getNextKeyReminders();
+  }, [getNextKeyReminders]);
+
+  const stats = useMemo(() => {
+    const done = dayReminders.filter(r => r.status === 'done').length;
+    const pending = dayReminders.filter(r => r.status === 'pending').length;
+    const discomfort = dayReminders.filter(r => r.status === 'discomfort').length;
+    return { done, pending, discomfort, total: dayReminders.length };
+  }, [dayReminders]);
+
+  const recoveryProgress = useMemo(() => {
+    if (!treatment) return 0;
+    return getRecoveryProgress(treatment.treatmentDate, treatment.expectedRecoveryDays);
+  }, [treatment]);
+
+  const isToday = viewDayOffset === 0;
+  const isPast = viewDayOffset < 0;
+  const isFuture = viewDayOffset > 0;
+
+  const getDayLabel = () => {
+    if (isToday) return '今天';
+    if (viewDayOffset === -1) return '昨天';
+    if (viewDayOffset === 1) return '明天';
+    if (viewDayOffset === 7) return '一周后';
+    return `术后第${currentViewDay + 1}天`;
+  };
+
+  const handlePrevDay = () => {
+    if (currentViewDay > 0) {
+      setViewDayOffset(prev => prev - 1);
+    }
+  };
+
+  const handleNextDay = () => {
+    if (treatment && currentViewDay < treatment.expectedRecoveryDays) {
+      setViewDayOffset(prev => prev + 1);
+    }
+  };
+
+  const handleBackToday = () => {
+    setViewDayOffset(0);
+  };
+
   const handleDone = (reminderId: string) => {
     console.log('[RemindersPage] 标记完成:', reminderId);
+    if (!isToday) {
+      Taro.showToast({
+        title: '只能标记今天的提醒哦',
+        icon: 'none'
+      });
+      return;
+    }
     updateReminderStatus(reminderId, 'done');
     Taro.showToast({
       title: '好棒！继续保持~',
@@ -67,6 +111,14 @@ const RemindersPage: React.FC = () => {
     });
   };
 
+  const getReturnVisitDate = () => {
+    if (!treatment) return '';
+    const days = treatment.expectedRecoveryDays;
+    const date = new Date(treatment.treatmentDate);
+    date.setDate(date.getDate() + days);
+    return formatDate(date, 'M月D日');
+  };
+
   return (
     <ScrollView
       className={styles.page}
@@ -74,6 +126,7 @@ const RemindersPage: React.FC = () => {
       refresherEnabled
       onRefresherRefresh={() => {
         console.log('[RemindersPage] 下拉刷新');
+        handleBackToday();
         setTimeout(() => Taro.stopPullDownRefresh(), 800);
       }}
     >
@@ -104,6 +157,12 @@ const RemindersPage: React.FC = () => {
             <View className={styles.detailItem}>
               <Text className={styles.detailLabel}>治疗位置</Text>
               <Text className={styles.detailValue}>{treatment.teethPosition}</Text>
+            </View>
+            <View className={styles.detailItem}>
+              <Text className={styles.detailLabel}>复诊时间</Text>
+              <Text className={classnames(styles.detailValue, styles.highlight)}>
+                {getReturnVisitDate()}（术后第{treatment.expectedRecoveryDays}天）
+              </Text>
             </View>
           </View>
 
@@ -150,12 +209,53 @@ const RemindersPage: React.FC = () => {
         </View>
       )}
 
+      <View className={styles.daySelector}>
+        <View
+          className={classnames(styles.dayNavBtn, currentViewDay <= 0 && styles.disabled)}
+          onClick={handlePrevDay}
+        >
+          <Text className={styles.dayNavText}>◀ 前一天</Text>
+        </View>
+        <View className={styles.dayInfo}>
+          <Text className={styles.dayLabel}>{getDayLabel()}</Text>
+          <Text className={styles.daySubLabel}>术后第{currentViewDay + 1}天</Text>
+        </View>
+        <View
+          className={classnames(styles.dayNavBtn, treatment && currentViewDay >= treatment.expectedRecoveryDays && styles.disabled)}
+          onClick={handleNextDay}
+        >
+          <Text className={styles.dayNavText}>后一天 ▶</Text>
+        </View>
+      </View>
+
+      {!isToday && (
+        <View className={styles.backTodayRow}>
+          <BigButton
+            text="回到今天"
+            type="primary"
+            size="block"
+            icon="📅"
+            onClick={handleBackToday}
+          />
+        </View>
+      )}
+
       <View className={styles.sectionTitle}>
-        <Text className={styles.sectionTitleText}>今天要做的事</Text>
+        <Text className={styles.sectionTitleText}>
+          {isToday ? '今天要做的事' : `${getDayLabel()}要注意的事`}
+        </Text>
         <View className={styles.reminderCount}>
           <Text className={styles.countText}>{stats.total}条提醒</Text>
         </View>
       </View>
+
+      {!isToday && (
+        <View className={styles.tipBox}>
+          <Text className={styles.tipText}>
+            💡 {isPast ? '这是之前的注意事项，可以回顾一下' : '提前看看未来的注意事项，心里有个底~'}
+          </Text>
+        </View>
+      )}
 
       <View className={styles.statsRow}>
         <View className={classnames(styles.statCard, styles.statCardDone)}>
@@ -172,8 +272,8 @@ const RemindersPage: React.FC = () => {
         </View>
       </View>
 
-      {todayReminders.length > 0 ? (
-        todayReminders.map(reminder => (
+      {dayReminders.length > 0 ? (
+        dayReminders.map(reminder => (
           <ReminderCard
             key={reminder.id}
             reminder={reminder}
@@ -183,10 +283,35 @@ const RemindersPage: React.FC = () => {
       ) : (
         <View className={styles.emptyBox}>
           <Text className={styles.emptyIcon}>🎉</Text>
-          <Text className={styles.emptyText}>今天的注意事项都完成啦</Text>
-          <Text className={styles.emptySubText}>
-            保持好心情，好好休息{treatment ? `，下次复诊：${formatDate(treatment.treatmentDate, 'M月D日')}后第${treatment.expectedRecoveryDays}天` : ''}
+          <Text className={styles.emptyText}>
+            {isToday ? '今天的注意事项都完成啦' : `${getDayLabel()}没有特别的提醒`}
           </Text>
+          <Text className={styles.emptySubText}>
+            {isToday
+              ? `保持好心情，好好休息，下次复诊：${getReturnVisitDate()}`
+              : '好好休息，有问题随时联系诊所'
+            }
+          </Text>
+        </View>
+      )}
+
+      {isFuture && nextKeyReminders.length > 0 && (
+        <View className={styles.keyRemindersSection}>
+          <View className={styles.keyRemindersHeader}>
+            <Text className={styles.keyRemindersIcon}>⭐</Text>
+            <Text className={styles.keyRemindersTitle}>重要节点提醒</Text>
+          </View>
+          {nextKeyReminders.slice(0, 3).map(reminder => (
+            <View key={reminder.id} className={styles.keyReminderItem}>
+              <View className={styles.keyReminderDay}>
+                <Text className={styles.keyReminderDayNum}>第{reminder.dayOffset + 1}天</Text>
+              </View>
+              <View className={styles.keyReminderContent}>
+                <Text className={styles.keyReminderTitle}>{reminder.title}</Text>
+                <Text className={styles.keyReminderDesc}>{reminder.content}</Text>
+              </View>
+            </View>
+          ))}
         </View>
       )}
     </ScrollView>

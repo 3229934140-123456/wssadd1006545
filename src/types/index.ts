@@ -180,6 +180,15 @@ export interface SubscriptionTemplate {
   tmplId: string;
 }
 
+// 处理备注项
+export interface TaskNote {
+  id: string;
+  content: string;
+  operator: string;
+  createdAt: string;
+  statusChange?: 'processing' | 'done';
+}
+
 // 诊所回访待处理任务
 export interface ClinicTask {
   id: string;
@@ -198,6 +207,7 @@ export interface ClinicTask {
   handledAt?: string;
   handledBy?: string;
   note?: string;
+  notes: TaskNote[];
 }
 
 // 照片反馈表单数据

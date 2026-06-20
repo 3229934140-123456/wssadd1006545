@@ -290,3 +290,147 @@
   color: $color-text-tertiary;
   line-height: 1.5;
 }
+
+.daySelector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.dayNavBtn {
+  padding: $spacing-sm $spacing-md;
+  background: $color-bg-hover;
+  border-radius: $radius-md;
+
+  &.disabled {
+    opacity: 0.3;
+  }
+}
+
+.dayNavText {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+}
+
+.dayInfo {
+  text-align: center;
+  flex: 1;
+}
+
+.dayLabel {
+  display: block;
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.daySubLabel {
+  display: block;
+  font-size: 24rpx;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.backTodayRow {
+  margin-bottom: $spacing-md;
+}
+
+.tipBox {
+  background: #FFF9E6;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.tipText {
+  font-size: 26rpx;
+  color: #996600;
+  line-height: 1.5;
+}
+
+.highlight {
+  color: $color-primary !important;
+  font-weight: $font-weight-semibold;
+}
+
+.keyRemindersSection {
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFF4D6 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-top: $spacing-lg;
+}
+
+.keyRemindersHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.keyRemindersIcon {
+  font-size: 36rpx;
+  margin-right: $spacing-sm;
+}
+
+.keyRemindersTitle {
+  font-size: 32rpx;
+  font-weight: $font-weight-bold;
+  color: #8B4513;
+}
+
+.keyReminderItem {
+  display: flex;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.keyReminderDay {
+  flex-shrink: 0;
+  background: #FF9F43;
+  color: #fff;
+  padding: 8rpx 16rpx;
+  border-radius: $radius-sm;
+  margin-right: $spacing-md;
+}
+
+.keyReminderDayNum {
+  font-size: 26rpx;
+  font-weight: $font-weight-semibold;
+}
+
+.keyReminderContent {
+  flex: 1;
+}
+
+.keyReminderItemTitle {
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+  color: #5D4037;
+  margin-bottom: 6rpx;
+  display: block;
+}
+
+.keyReminderTitle {
+  font-size: 30rpx;
+  font-weight: $font-weight-semibold;
+  color: #5D4037;
+  margin-bottom: 6rpx;
+  display: block;
+}
+
+.keyReminderDesc {
+  font-size: 26rpx;
+  color: #8B6914;
+  line-height: 1.5;
+}

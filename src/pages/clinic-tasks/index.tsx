@@ -184,6 +184,11 @@ const ClinicTasksPage: React.FC = () => {
               getPriorityClass(task.priority),
               task.status === 'done' && styles.statusDone
             )}
+            onClick={() => {
+              Taro.navigateTo({
+                url: `/pages/task-detail/index?taskId=${task.id}`
+              });
+            }}
           >
             <View className={styles.taskHeader}>
               <View className={styles.taskPatientInfo}>
@@ -254,7 +259,8 @@ const ClinicTasksPage: React.FC = () => {
                         src={photo}
                         className={styles.photoPreviewImg}
                         mode="aspectFill"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           Taro.previewImage({
                             urls: task.report!.photos as string[],
                             current: photo
@@ -273,6 +279,15 @@ const ClinicTasksPage: React.FC = () => {
                   </Text>
                 </View>
               )}
+
+              {task.notes && task.notes.length > 0 && (
+                <View className={styles.latestProgress}>
+                  <Text className={styles.latestProgressLabel}>📋 最新进展：</Text>
+                  <Text className={styles.latestProgressText}>
+                    {task.notes[task.notes.length - 1].content}
+                  </Text>
+                </View>
+              )}
             </View>
 
             <View className={styles.taskFooter}>
@@ -285,19 +300,19 @@ const ClinicTasksPage: React.FC = () => {
                 <View className={styles.taskActions}>
                   <View
                     className={classnames(styles.actionBtn, styles.call)}
-                    onClick={() => handleCall(task)}
+                    onClick={(e) => { e.stopPropagation(); handleCall(task); }}
                   >
                     <Text className={styles.actionBtnText}>📞 联系</Text>
                   </View>
                   <View
                     className={classnames(styles.actionBtn, styles.process)}
-                    onClick={() => handleProcess(task.id)}
+                    onClick={(e) => { e.stopPropagation(); handleProcess(task.id); }}
                   >
                     <Text className={styles.actionBtnText}>处理中</Text>
                   </View>
                   <View
                     className={classnames(styles.actionBtn, styles.done)}
-                    onClick={() => handleDone(task.id)}
+                    onClick={(e) => { e.stopPropagation(); handleDone(task.id); }}
                   >
                     <Text className={styles.actionBtnText}>完成</Text>
                   </View>
@@ -308,13 +323,13 @@ const ClinicTasksPage: React.FC = () => {
                 <View className={styles.taskActions}>
                   <View
                     className={classnames(styles.actionBtn, styles.call)}
-                    onClick={() => handleCall(task)}
+                    onClick={(e) => { e.stopPropagation(); handleCall(task); }}
                   >
                     <Text className={styles.actionBtnText}>📞 再次联系</Text>
                   </View>
                   <View
                     className={classnames(styles.actionBtn, styles.done)}
-                    onClick={() => handleDone(task.id)}
+                    onClick={(e) => { e.stopPropagation(); handleDone(task.id); }}
                   >
                     <Text className={styles.actionBtnText}>完成</Text>
                   </View>

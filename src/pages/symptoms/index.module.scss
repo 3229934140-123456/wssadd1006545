@@ -35,6 +35,80 @@
   gap: $spacing-md;
 }
 
+.summaryCard {
+  background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  box-shadow: $shadow-card;
+
+  &.summaryGood {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+  }
+
+  &.summaryWarning {
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+  }
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+}
+
+.summaryIcon {
+  font-size: 48rpx;
+  margin-right: $spacing-md;
+}
+
+.summaryTitle {
+  font-size: 36rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-primary;
+}
+
+.summaryMessage {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  margin-bottom: $spacing-md;
+}
+
+.summaryTips {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: $radius-md;
+  padding: $spacing-md;
+}
+
+.summaryTipItem {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: $spacing-sm;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.summaryTipDot {
+  font-size: 28rpx;
+  color: $color-text-secondary;
+  margin-right: $spacing-sm;
+  line-height: 1.5;
+}
+
+.summaryTipText {
+  flex: 1;
+  font-size: 26rpx;
+  color: $color-text-secondary;
+  line-height: 1.5;
+}
+
+.summaryAction {
+  margin-top: $spacing-md;
+}
+
 .overviewCard {
   background: $color-bg-card;
   border-radius: $radius-lg;

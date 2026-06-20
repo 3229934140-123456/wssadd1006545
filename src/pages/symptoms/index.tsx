@@ -38,6 +38,67 @@ const SymptomsPage: React.FC = () => {
     }));
   }, [symptoms]);
 
+  const recoverySummary = useMemo(() => {
+    const recent = symptoms.slice(0, 5);
+    if (recent.length < 2) {
+      return {
+        status: 'normal',
+        title: '刚开始记录，继续保持~',
+        message: '多记录几天，就能看到恢复趋势了',
+        tips: []
+      };
+    }
+
+    const latest = recent[0];
+    const earlier = recent[recent.length - 1];
+
+    const painBetter = latest.painLevel <= earlier.painLevel;
+    const painWorse = latest.painLevel >= earlier.painLevel + 2;
+    const swellingWorse = latest.swellingLevel === 'severe' || (latest.swellingLevel === 'moderate' && earlier.swellingLevel === 'none');
+    const hasEmergency = latest.bleeding || latest.fever;
+    const missedMeds = latest.medicationStatus === 'missed';
+
+    const tips: string[] = [];
+
+    if (painWorse) {
+      tips.push('最近疼痛明显加重了，建议联系医生看看');
+    }
+    if (swellingWorse) {
+      tips.push('肿胀比较明显，最好咨询一下诊所');
+    }
+    if (hasEmergency) {
+      tips.push('有出血或发烧情况，不要大意，请尽快联系诊所');
+    }
+    if (missedMeds) {
+      tips.push('最近忘记吃药了，要记得按时服药哦');
+    }
+
+    if (tips.length > 0) {
+      return {
+        status: 'warning',
+        title: '需要多留意一下',
+        message: '最近恢复情况有些波动，建议关注以下几点：',
+        tips
+      };
+    }
+
+    if (painBetter && latest.painLevel <= 2) {
+      return {
+        status: 'good',
+        title: '恢复得不错！',
+        message: '疼痛在减轻，整体趋势很好，继续保持~',
+        tips: ['继续保持良好的休息和饮食习惯', '有任何不适随时告诉我们']
+      };
+    }
+
+    return {
+      status: 'normal',
+      title: '恢复中，继续加油',
+      message: '整体情况稳定，慢慢在变好',
+      tips: ['注意休息，按时吃药', '有问题随时联系诊所']
+    };
+  }, [symptoms]);
+
   const getBarClass = (level: number) => {
     if (level <= 1) return styles.trendBarLow;
     if (level <= 3) return styles.trendBarMid;
@@ -107,6 +168,40 @@ const SymptomsPage: React.FC = () => {
             onClick={handleEmergencyReport}
           />
         </View>
+      </View>
+
+      <View className={classnames(
+        styles.summaryCard,
+        recoverySummary.status === 'good' && styles.summaryGood,
+        recoverySummary.status === 'warning' && styles.summaryWarning
+      )}>
+        <View className={styles.summaryHeader}>
+          <Text className={styles.summaryIcon}>
+            {recoverySummary.status === 'good' ? '😊' : recoverySummary.status === 'warning' ? '⚠️' : '💪'}
+          </Text>
+          <Text className={styles.summaryTitle}>{recoverySummary.title}</Text>
+        </View>
+        <Text className={styles.summaryMessage}>{recoverySummary.message}</Text>
+        {recoverySummary.tips.length > 0 && (
+          <View className={styles.summaryTips}>
+            {recoverySummary.tips.map((tip, idx) => (
+              <View key={idx} className={styles.summaryTipItem}>
+                <Text className={styles.summaryTipDot}>•</Text>
+                <Text className={styles.summaryTipText}>{tip}</Text>
+              </View>
+            ))}
+          </View>
+        )}
+        {recoverySummary.status === 'warning' && (
+          <View className={styles.summaryAction}>
+            <BigButton
+              text="📞 联系诊所问问"
+              type="danger"
+              size="block"
+              onClick={handleEmergencyReport}
+            />
+          </View>
+        )}
       </View>
 
       <View className={styles.overviewCard}>

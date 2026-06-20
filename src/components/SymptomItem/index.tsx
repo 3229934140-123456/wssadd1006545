@@ -19,7 +19,14 @@ const SymptomItem: React.FC<SymptomItemProps> = ({ record }) => {
   };
 
   return (
-    <View className={styles.symptomItem}>
+    <View
+      className={styles.symptomItem}
+      onClick={() => {
+        Taro.navigateTo({
+          url: `/pages/symptom-detail/index?recordId=${record.id}`
+        });
+      }}
+    >
       <View className={styles.itemHeader}>
         <View className={styles.headerLeft}>
           <Text className={styles.dateText}>{formatDate(record.date, 'M月D日')}反馈</Text>
@@ -84,7 +91,8 @@ const SymptomItem: React.FC<SymptomItemProps> = ({ record }) => {
                 src={photo}
                 className={styles.photoImg}
                 mode="aspectFill"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   Taro.previewImage({
                     urls: record.photos as string[],
                     current: photo

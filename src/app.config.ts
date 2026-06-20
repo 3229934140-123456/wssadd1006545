@@ -4,6 +4,8 @@ export default defineAppConfig({
     'pages/symptoms/index',
     'pages/contact/index',
     'pages/clinic-tasks/index',
+    'pages/task-detail/index',
+    'pages/symptom-detail/index',
     'pages/feedback-detail/index',
     'pages/discomfort-form/index',
     'pages/family-invite/index'
